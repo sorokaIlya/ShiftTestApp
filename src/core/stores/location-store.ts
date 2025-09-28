@@ -1,20 +1,16 @@
 import { LatLng, LocationEnumError, PermissionEnum } from '@/core/types';
-import { checkLocationPermission } from '@/core/utils';
-import { LocationService } from '@/services/location-service';
-import { makeAutoObservable, runInAction } from 'mobx';
+import { LocationService } from '@/core/location-service';
+import { makeAutoObservable, observable, runInAction } from 'mobx';
 
 export class LocationStore {
-    persmisonStatus?: PermissionEnum;
     locationError?: LocationEnumError
     loading = false;
     coordinats?: LatLng;
 
     constructor(private service: LocationService) {
-        makeAutoObservable(this);
-    }
-
-    get hasPermission() {
-        return this.persmisonStatus === PermissionEnum.GRANTED;
+        makeAutoObservable(this, {
+            coordinats: observable.struct
+        });
     }
 
     get isGeoLocationFailed() {
@@ -23,10 +19,6 @@ export class LocationStore {
 
     async fetchLocation() {
         this.loading = true;
-        this.persmisonStatus = await checkLocationPermission();
-        if (!this.hasPermission) {
-            return;
-        }
         const result = await this.service.getCurrentLocation();
         if (result.ok) {
             runInAction(() => {

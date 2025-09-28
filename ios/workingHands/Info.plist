@@ -49,5 +49,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Нам нужен доступ для загрузки вакансий</string>
 </dict>
 </plist>

@@ -1,16 +1,13 @@
-import { ShiftOutput } from "@/types/types";
+
 import { observer } from "mobx-react-lite";
 import { StyleSheet, Text, View } from "react-native";
+import { ShiftOutput } from "../core/types";
 
-type Props = {
-    item: ShiftOutput;
-}
-
-export const ShiftPage = observer<Props>(({ item }) => {
+export const ShiftDetailPage = observer(() => {
     return (
 
         <View>
-            <Text>{item.companyName}</Text>
+            {/* <Text>{item.companyName}</Text> */}
         </View>
     );
 })

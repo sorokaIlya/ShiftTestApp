@@ -1,19 +1,18 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import { RootStore } from "./root-store";
+import { RootStore } from "../stores/root-store";
 
 interface AppContextType {
     rootStore: RootStore
 }
 
-
-const AppContext = createContext<AppContextType>({} as AppContextType);
+const AppContext = createContext<AppContextType | null>(null);
 
 type ContextProviderProps = {
     children: ReactNode;
 };
 
 
-export const AppContextProvider = ({ children }: ContextProviderProps) => {
+export const RootContextProvider = ({ children }: ContextProviderProps) => {
     const [store] = useState(() => ({ rootStore: new RootStore() }));
     return (
         <AppContext.Provider value={store}>{children}</AppContext.Provider>
@@ -21,9 +20,10 @@ export const AppContextProvider = ({ children }: ContextProviderProps) => {
 };
 
 
-export const useAppContext = () => {
+export const useStore = () => {
     const context = useContext(AppContext);
     if (!context) {
-        throw new Error('useAppContext must be used inside AppContextProvider');
+        throw new Error('useStore must be used inside RootContextProvider');
     }
+    return context.rootStore;
 }
