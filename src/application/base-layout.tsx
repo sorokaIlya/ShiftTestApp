@@ -7,12 +7,18 @@ type Props = { children: ReactNode };
 
 export const BaseLayout = ({ children }: Props) => (
     <SafeAreaView style={styles.safe}>
-        <StatusBar barStyle="dark-content" />
         <View style={styles.container}>{children}</View>
     </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
-    safe: { flex: 1, backgroundColor: "#f8f8f8" },
-    container: { flex: 1, paddingHorizontal: 16, paddingTop: 8 },
+    safe: {
+        flex: 1,
+        backgroundColor: "#dfdfdfff"
+    },
+    container: {
+        flex: 1,
+        paddingHorizontal: 8,
+        paddingTop: 8
+    },
 });

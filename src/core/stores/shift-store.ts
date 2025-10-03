@@ -6,7 +6,6 @@ import { LocationStore } from "./location-store";
 export class ShiftsStore {
     shiftData: ShiftOutput[] = [];
     loading: boolean = false;
-
     constructor(private locationStore: LocationStore) {
         makeAutoObservable(this);
     }
@@ -15,14 +14,20 @@ export class ShiftsStore {
         return this.locationStore.loading || this.loading;
     }
 
+    getShiftById = (shiftId: string) => {
+        return this.shiftData.find(item => item.id === shiftId);
+    }
+
     public loadJobs = async (location: LatLng) => {
+        console.log('FETCH!');
+
         this.loading = true;
         try {
-
             const res = await apiLoadShifts({
                 lat: location.latitude,
                 lng: location.longitude,
             });
+            console.log(res.length);
             runInAction(() => {
                 this.shiftData = res;
             });

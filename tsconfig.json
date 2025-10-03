@@ -5,14 +5,13 @@
     "**/Pods"
   ],
   "compilerOptions": {
+    "useDefineForClassFields": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src"
-  ],
+  // "include": [
+  //   "src"
+  // ],
 }

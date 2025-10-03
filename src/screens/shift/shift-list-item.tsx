@@ -1,53 +1,114 @@
 
+import { GAP_SPACE } from "@/application/constants";
 import { ShiftOutput } from "@/core/types";
 import { observer } from "mobx-react-lite";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 type Props = {
   item: ShiftOutput;
-  onItemNavigate: () => void;
+  onPressItem: () => void;
 }
 
-export const ShiftListItem = observer<Props>(({ item, onItemNavigate }) => {
+export const ShiftListItem = observer<Props>(({ item, onPressItem }) => {
   return (
-    <View style={styles.card}>
-      <Text style={styles.header}>{item.companyName}</Text>
+    <TouchableOpacity
+      onPress={() => onPressItem()}
+      activeOpacity={0.8}
+      style={[styles.itemWrap]}
+    >
+      <View style={[styles.card]}>
+        <Image
+          source={{ uri: item.logo }}
+          resizeMode="contain"
+          style={[styles.logo]}
+        />
+        <View style={styles.info}>
+          <Text numberOfLines={1} style={styles.companyName}>
+            {item.companyName}
+          </Text>
 
-    </View>
+          <Text numberOfLines={1} style={styles.address}>
+            {item.address}
+          </Text>
+
+          <View style={styles.dateRow}>
+            <Text style={styles.dateText}>{item.dateStartByCity}</Text>
+            <Text style={styles.timeText}>{item.timeStartByCity}</Text>
+          </View>
+        </View>
+
+        <View style={styles.ratingWrap}>
+          <Text>Зарплата:</Text>
+          <Text style={styles.salary}>{item.priceWorker}</Text>
+
+        </View>
+      </View>
+    </TouchableOpacity>
   );
-})
+});
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    margin: 5,
-    padding: 15,
-    borderRadius: 10,
-    backgroundColor: '#fff',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+  itemWrap: {
+    flex: 0.5,
+    padding: 10,
+    marginBottom: GAP_SPACE,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  card: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
+    alignItems: 'flex-start',
+    paddingVertical: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  logo: {
+    // aspectRatio: 1,
+    minHeight: 100,
+    width: '100%',
     marginBottom: 8,
   },
-  icon: {
-    fontSize: 24,
-    marginRight: 8,
+  info: {
+    borderTopColor: '#eee',
+    borderTopWidth: 1,
+    paddingTop: 8,
+    margin: 10
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 16,
+  companyName: {
+    fontSize: 14,
+    fontWeight: '700',
+    marginBottom: 4,
   },
-  description: {
-    fontSize: 13,
-    color: '#555',
-    marginBottom: 6,
+  address: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 8,
   },
-  rate: {
+  dateRow: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-});
+  dateText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  timeText: {
+    fontSize: 12,
+    color: '#444',
+  },
+  ratingWrap: {
+    flexDirection: 'row',
+    verticalAlign: 'middle',
+    columnGap: 8,
+    marginTop: 12,
+    alignSelf: 'flex-end',
+    fontSize: 12,
+  },
+  salary: {
+    color: 'gold',
+    paddingRight: 5
+  }
+})
